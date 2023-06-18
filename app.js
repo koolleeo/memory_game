@@ -23,7 +23,8 @@ const loadPokemon = async () => {
     // await responses using promise ALL
     const responses = await Promise.all(pokePromises);
 
-    console.log(responses);
+    // return responses as JSON
+    return await Promise.all(responses.map(response => response.json()));
 
 }
 
