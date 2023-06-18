@@ -157,7 +157,12 @@ const clickCard = (event) => {
             
         } else {
 
-            matches++
+            matches++;
+            if(matches == 8){
+                console.log('winner')
+            }
+            firstPick = null;
+            isPaused = false;
 
         }
     }
