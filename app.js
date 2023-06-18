@@ -77,7 +77,7 @@ const pokemonHTML = pokemon.map(pokemon => {
     const color = colors[type];
 
     return `
-            <div class="card" style="background-color:${color}">
+            <div class="card" style="background-color:${color}" onclick="clickCard(event)" data-pokename="${pokemon.name}">
                 <div class="front">
                 </div>
                 <div class="back rotated" style="background-color:${color}">
@@ -90,6 +90,23 @@ const pokemonHTML = pokemon.map(pokemon => {
 
 // display HTML on page
 game.innerHTML = pokemonHTML;
+
+}
+
+const clickCard = (event => {
+
+    // use event.currentTarget to capture card click, rather than just front card (if using event.target)
+    console.log(event.currentTarget.dataset.pokename);
+})
+
+// create function to capture front and back of card and return as [front, back] array
+const getFrontAndBackFromCard = (card) => {
+
+    const front = card.querySelector(".front");
+
+    const back = card.querySelector("./back");
+    
+    return [front , back]
 
 }
 

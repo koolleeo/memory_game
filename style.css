@@ -33,6 +33,7 @@ header {
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
 }
 
 .front, .back {
@@ -43,6 +44,8 @@ header {
     justify-content: center;
     align-items: center;
     position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.5s;
 }
 
 .front {
@@ -53,3 +56,6 @@ header {
     background-size: 80%;
 }
 
+.rotated {
+    transform: rotateY(180deg);
+}
