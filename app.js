@@ -9,7 +9,7 @@ let isPaused = false;
 
 // define variable to track first picked card to validate match against
 let firstPick;
-
+let matches;
 
 // add a color mapping object
 const colors = {
@@ -58,13 +58,24 @@ const loadPokemon = async () => {
 
 
 // create a function to reset game
-const resetGame = async () => {
+const resetGame = () => {
+
+    // initialize variables
+    game.innerHTML = '';
+    isPaused = true;
+    firstPick = null;
+    matches = 0;
+    setTimeout(async ()=> {
 
     // use loadPokemon function to return 8 random pokemon
     const pokemon = await loadPokemon();
 
     // call displayPokemon function - need 2 randomised arrays (to match one against the other).
-    displayPokemon([...pokemon, ...pokemon])
+    displayPokemon([...pokemon, ...pokemon]);
+
+    isPaused = false;
+
+    },200)
 
 }
 
@@ -115,9 +126,14 @@ const clickCard = (event) => {
     // game in flight
     isPaused = true;
 
+  
     // toogle 'rotated' class when card clicked
+    rotateElements([front, back]);
+
+    /*
     front.classList.toggle('rotated');
     back.classList.toggle('rotated');
+    */
 
     // add game logic
     if(!firstPick){
@@ -133,6 +149,15 @@ const clickCard = (event) => {
         if(firstPokemonName != secondPokemonName){
 
             const [firstFront, firstBack] = getFrontAndBackFromCard(firstPick);
+            setTimeout(() => {
+                rotateElements([front, back, firstFront, firstBack]);
+                firstPick = null;
+                isPaused = false;
+            },500)
+            
+        } else {
+
+            matches++
 
         }
     }
