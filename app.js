@@ -4,6 +4,13 @@ const pokeAPIbaseURL = `https://pokeapi.co/api/v2/pokemon/`;
 // define variable for game element
 const game = document.getElementById('game');
 
+// define variable for game paused - default to false
+let isPaused = false;
+
+// define variable to track first picked card to validate match against
+let firstPick;
+let matches;
+
 // add a color mapping object
 const colors = {
     fire: '#FDDFDF',
@@ -51,13 +58,24 @@ const loadPokemon = async () => {
 
 
 // create a function to reset game
-const resetGame = async () => {
+const resetGame = () => {
+
+    // initialize variables
+    game.innerHTML = '';
+    isPaused = true;
+    firstPick = null;
+    matches = 0;
+    setTimeout(async ()=> {
 
     // use loadPokemon function to return 8 random pokemon
     const pokemon = await loadPokemon();
 
     // call displayPokemon function - need 2 randomised arrays (to match one against the other).
-    displayPokemon([...pokemon, ...pokemon])
+    displayPokemon([...pokemon, ...pokemon]);
+
+    isPaused = false;
+
+    },200)
 
 }
 
@@ -93,18 +111,78 @@ game.innerHTML = pokemonHTML;
 
 }
 
-const clickCard = (event => {
+const clickCard = (event) => {
+
+    // console.log(event.currentTarget.dataset.pokename);
 
     // use event.currentTarget to capture card click, rather than just front card (if using event.target)
-    console.log(event.currentTarget.dataset.pokename);
-})
+    const pokemonCard = event.currentTarget;
+
+    const [front, back] = getFrontAndBackFromCard(pokemonCard);
+    
+    // add logic to prevent rotation if already flipped
+    if(front.classList.contains('rotated') || isPaused) return;
+    
+    // game in flight
+    isPaused = true;
+
+  
+    // toogle 'rotated' class when card clicked
+    rotateElements([front, back]);
+
+    /*
+    front.classList.toggle('rotated');
+    back.classList.toggle('rotated');
+    */
+
+    // add game logic
+    if(!firstPick){
+
+        firstPick = pokemonCard;
+        isPaused = false;
+
+    } else {
+
+        const secondPokemonName = pokemonCard.dataset.pokename;
+        const firstPokemonName = firstPick.dataset.pokename;
+
+        if(firstPokemonName != secondPokemonName){
+
+            const [firstFront, firstBack] = getFrontAndBackFromCard(firstPick);
+            setTimeout(() => {
+                rotateElements([front, back, firstFront, firstBack]);
+                firstPick = null;
+                isPaused = false;
+            },500)
+            
+        } else {
+
+            matches++;
+            if(matches == 8){
+                console.log('winner')
+            }
+            firstPick = null;
+            isPaused = false;
+
+        }
+    }
+}
+
+// create function to rotate elements if no match found
+const rotateElements = (elements) => {
+
+    if(typeof elements != 'object' || !elements.length) return;
+
+    elements.forEach(element => element.classList.toggle('rotated'));
+
+}
 
 // create function to capture front and back of card and return as [front, back] array
 const getFrontAndBackFromCard = (card) => {
 
     const front = card.querySelector(".front");
 
-    const back = card.querySelector("./back");
+    const back = card.querySelector(".back");
     
     return [front , back]
 
