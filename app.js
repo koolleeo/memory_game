@@ -4,6 +4,24 @@ const pokeAPIbaseURL = `https://pokeapi.co/api/v2/pokemon/`;
 // define variable for game element
 const game = document.getElementById('game');
 
+// add a color mapping object
+const colors = {
+    fire: '#FDDFDF',
+    grass: '#DEFDE0',
+    electric: '#FCF7DE',
+    water: '#DEF3FD',
+    ground: '#f4e7da',
+    rock: '#d5d5d4',
+    fairy: '#fceaff',
+    poison: '#98d7a5',
+    bug: '#f8d5a3',
+    dragon: '#97b3e6',
+    pyschic: '#eaeda1',
+    flying: '#F5F5F5',
+    fighting: '#E6E0D4',
+    normal: '#F5F5F5'
+}
+
 const loadPokemon = async () => {
 
     // create new SET to hold random ids
@@ -53,9 +71,12 @@ pokemon.sort( _ => Math.random() - 0.5);
 const pokemonHTML = pokemon.map(pokemon => {
     return `
             <div class="card">
-            <div class="front">
-            </div>
-                <h2>${pokemon.name}</h2>
+                <div class="front">
+                </div>
+                <div class="back rotated">
+                    <h2>${pokemon.name}</h2>
+                    <img src="${pokemon.sprites.front_default}" alt=${pokemon.name}>
+                </div>
             </div>    
             `
 }).join('');
