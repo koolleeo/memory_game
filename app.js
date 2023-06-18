@@ -135,8 +135,16 @@ const clickCard = (event) => {
             const [firstFront, firstBack] = getFrontAndBackFromCard(firstPick);
 
         }
+    }
+}
 
-    
+// create function to rotate elements if no match found
+const rotateElements = (elements) => {
+
+    if(typeof elements != 'object' || !elements.length) return;
+
+    elements.forEach(element => element.classList.toggle('rotated'));
+
 }
 
 // create function to capture front and back of card and return as [front, back] array
