@@ -4,6 +4,13 @@ const pokeAPIbaseURL = `https://pokeapi.co/api/v2/pokemon/`;
 // define variable for game element
 const game = document.getElementById('game');
 
+// define variable for game paused - default to false
+let isPaused = false;
+
+// define variable to track first picked card to validate match against
+let firstPick;
+
+
 // add a color mapping object
 const colors = {
     fire: '#FDDFDF',
@@ -102,6 +109,12 @@ const clickCard = (event => {
 
     const [front, back] = getFrontAndBackFromCard(pokemonCard);
     
+    // add logic to prevent rotation if already flipped
+    if(front.classList.contains('rotated') || isPaused) return;
+    
+    // game in flight
+    isPaused = true;
+
     // toogle 'rotated' class when card clicked
     front.classList.toggle('rotated');
     back.classList.toggle('rotated');
