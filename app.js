@@ -100,7 +100,7 @@ game.innerHTML = pokemonHTML;
 
 }
 
-const clickCard = (event => {
+const clickCard = (event) => {
 
     // console.log(event.currentTarget.dataset.pokename);
 
@@ -118,7 +118,26 @@ const clickCard = (event => {
     // toogle 'rotated' class when card clicked
     front.classList.toggle('rotated');
     back.classList.toggle('rotated');
-})
+
+    // add game logic
+    if(!firstPick){
+
+        firstPick = pokemonCard;
+        isPaused = false;
+
+    } else {
+
+        const secondPokemonName = pokemonCard.dataset.pokename;
+        const firstPokemonName = firstPick.dataset.pokename;
+
+        if(firstPokemonName != secondPokemonName){
+
+            const [firstFront, firstBack] = getFrontAndBackFromCard(firstPick);
+
+        }
+
+    
+}
 
 // create function to capture front and back of card and return as [front, back] array
 const getFrontAndBackFromCard = (card) => {
