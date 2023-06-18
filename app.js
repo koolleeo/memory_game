@@ -17,7 +17,10 @@ const loadPokemon = async () => {
 
     }
 
-    console.log(randomIds);
+    // map baseURL and random IDs to an array of promises
+    const pokePromises = [...randomIds].map(id => fetch(`${pokeAPIbaseURL}${id}`));
+    
+    console.log(pokePromises);
 
 }
 
