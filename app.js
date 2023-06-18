@@ -69,11 +69,18 @@ pokemon.sort( _ => Math.random() - 0.5);
 
 // map pokemon to a card and HTML template
 const pokemonHTML = pokemon.map(pokemon => {
+
+    // capture type of pokemon and define as variable
+    const type = pokemon.types[0]?.type?.name || 'normal';
+
+    // map color to pokemon based on type
+    const color = colors[type];
+
     return `
-            <div class="card">
+            <div class="card" style="background-color:${color}" onclick="clickCard(event)" data-pokename="${pokemon.name}">
                 <div class="front">
                 </div>
-                <div class="back rotated">
+                <div class="back rotated" style="background-color:${color}">
                     <h2>${pokemon.name}</h2>
                     <img src="${pokemon.sprites.front_default}" alt=${pokemon.name}>
                 </div>
@@ -83,6 +90,23 @@ const pokemonHTML = pokemon.map(pokemon => {
 
 // display HTML on page
 game.innerHTML = pokemonHTML;
+
+}
+
+const clickCard = (event => {
+
+    // use event.currentTarget to capture card click, rather than just front card (if using event.target)
+    console.log(event.currentTarget.dataset.pokename);
+})
+
+// create function to capture front and back of card and return as [front, back] array
+const getFrontAndBackFromCard = (card) => {
+
+    const front = card.querySelector(".front");
+
+    const back = card.querySelector("./back");
+    
+    return [front , back]
 
 }
 
