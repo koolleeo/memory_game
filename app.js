@@ -53,6 +53,8 @@ pokemon.sort( _ => Math.random() - 0.5);
 const pokemonHTML = pokemon.map(pokemon => {
     return `
             <div class="card">
+            <div class="front">
+            </div>
                 <h2>${pokemon.name}</h2>
             </div>    
             `

@@ -32,3 +32,15 @@ header {
     overflow: hidden;
 }
 
+.front, .back {
+    height: 100%;
+    width: 100%;
+}
+
+.front {
+    background-image: url("/pokeball.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+    background-size: 80%;
+}
