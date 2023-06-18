@@ -95,8 +95,16 @@ game.innerHTML = pokemonHTML;
 
 const clickCard = (event => {
 
+    // console.log(event.currentTarget.dataset.pokename);
+
     // use event.currentTarget to capture card click, rather than just front card (if using event.target)
-    console.log(event.currentTarget.dataset.pokename);
+    const pokemonCard = event.currentTarget;
+
+    const [front, back] = getFrontAndBackFromCard(pokemonCard);
+    
+    // toogle 'rotated' class when card clicked
+    front.classList.toggle('rotated');
+    back.classList.toggle('rotated');
 })
 
 // create function to capture front and back of card and return as [front, back] array
@@ -104,7 +112,7 @@ const getFrontAndBackFromCard = (card) => {
 
     const front = card.querySelector(".front");
 
-    const back = card.querySelector("./back");
+    const back = card.querySelector(".back");
     
     return [front , back]
 
