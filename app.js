@@ -28,4 +28,15 @@ const loadPokemon = async () => {
 
 }
 
-loadPokemon();
+
+// create a function to reset game
+const resetGame = async () => {
+
+    // use loadPokemon function to return 8 random pokemon
+    const pokemon = await loadPokemon();
+
+    // TODO: create function to display pokemon
+    // call displayPokemon function - need 2 randomised arrays (to match one against the other).
+    displayPokemon([...pokemon, ...pokemon])
+
+}
