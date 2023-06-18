@@ -20,7 +20,10 @@ const loadPokemon = async () => {
     // map baseURL and random IDs to an array of promises
     const pokePromises = [...randomIds].map(id => fetch(`${pokeAPIbaseURL}${id}`));
     
-    console.log(pokePromises);
+    // await responses using promise ALL
+    const responses = await Promise.all(pokePromises);
+
+    console.log(responses);
 
 }
 
